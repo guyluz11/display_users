@@ -14,26 +14,29 @@ import 'package:kt_dart/src/collection/kt_list.dart';
 class AuthFacadeRepository implements IUserRepository {
   @override
   Future<Either<UserFailures, KtList<UserEntity>>> getAllUsers() async {
-    final String randomDataApi = await RandomDataApi().getUsrts();
+    try {
+      final String randomDataApi = await RandomDataApi().getUsrts();
 
-    final List<UserEntity> userEntityList = [];
+      final List<UserEntity> userEntityList = [];
+      final dynamic jsonDecoded = json.decode(randomDataApi);
 
-    final dynamic jsonDecoded = json.decode(randomDataApi);
-
-    if (randomDataApi[0] == '[') {
-      final List<dynamic> listOfUsersFromApi = jsonDecoded as List<dynamic>;
-      for (final dynamic singleUserFromApiDynamic in listOfUsersFromApi) {
-        final Map<String, dynamic> singleUserFromApiJson =
-            singleUserFromApiDynamic as Map<String, dynamic>;
-        userEntityList
-            .add(UserDtos.fromJsonDynamic(singleUserFromApiJson).toDomain());
+      if (randomDataApi[0] == '[') {
+        final List<dynamic> listOfUsersFromApi = jsonDecoded as List<dynamic>;
+        for (final dynamic singleUserFromApiDynamic in listOfUsersFromApi) {
+          final Map<String, dynamic> singleUserFromApiJson =
+              singleUserFromApiDynamic as Map<String, dynamic>;
+          userEntityList
+              .add(UserDtos.fromJsonDynamic(singleUserFromApiJson).toDomain());
+        }
+      } else {
+        userEntityList.add(UserDtos.fromJsonDynamic(jsonDecoded).toDomain());
       }
-    } else {
-      userEntityList.add(UserDtos.fromJsonDynamic(jsonDecoded).toDomain());
+
+      final KtList<UserEntity> b = userEntityList.toImmutableList();
+
+      return right(b);
+    } catch (e) {
+      return left(const UserFailures.unexpected());
     }
-
-    final KtList<UserEntity> b = userEntityList.toImmutableList();
-
-    return right(b);
   }
 }
