@@ -1,8 +1,8 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter/material.dart';
 import 'package:display_users/presentation/introduction_screen/introductions_view_model_body/introduction_screen_body_about_page.dart';
 import 'package:display_users/presentation/introduction_screen/introductions_view_model_body/introduction_screen_body_welcome_page.dart';
 import 'package:display_users/presentation/routes/app_router.gr.dart';
+import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 
 class IntroductionScreenBody extends StatelessWidget {
@@ -47,7 +47,7 @@ class IntroductionScreenBody extends StatelessWidget {
                   margin: const EdgeInsets.only(top: 20, bottom: 5),
                   child: Center(
                     child: Image.asset(
-                      'assets/cbj_logo.png',
+                      'assets/users_icon_adaptive.png',
                       height: 200.0,
                     ),
                   ),

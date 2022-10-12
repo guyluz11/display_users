@@ -95,29 +95,7 @@ class IntroductionScreenBodyWelcomePage extends StatelessWidget {
           child: SizedBox(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                CircleAvatar(
-                  backgroundColor: Colors.transparent,
-                  radius: 55.0,
-                  child: Image.network(
-                    'https://i.ibb.co/tHWm1NV/Cy-Bear-Jinni-smart-device-logo.png',
-                  ),
-                ),
-                CircleAvatar(
-                  backgroundColor: Colors.transparent,
-                  radius: 55.0,
-                  child: Image.network(
-                    'https://user-images.githubusercontent.com/9304740/97423649-3ab85300-1918-11eb-8c2e-50ce0445c457.png',
-                  ),
-                ),
-                CircleAvatar(
-                  backgroundColor: Colors.transparent,
-                  radius: 55.0,
-                  child: Image.network(
-                    'https://user-images.githubusercontent.com/62209650/95081236-8e6cbd80-0719-11eb-99b9-8efc34e711b0.png',
-                  ),
-                ),
-              ],
+              children: [],
             ),
           ),
         ),
