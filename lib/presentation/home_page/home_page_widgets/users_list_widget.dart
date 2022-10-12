@@ -8,14 +8,24 @@ class UsersListWidget extends StatelessWidget {
     return BlocBuilder<UserBloc, UserState>(
       builder: (context, state) {
         return state.map(
-          initial: (_) => const Text(
-            'Go',
-            style: TextStyle(color: Colors.black),
-          ),
-          loadInProgress: (_) => const SizedBox(
-            height: 70,
-            width: 70,
-            child: CircularProgressIndicator(),
+          loadInProgress: (_) => Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                Text(
+                  'Fetching all users',
+                  style: TextStyle(color: Colors.black, fontSize: 30),
+                ),
+                SizedBox(
+                  height: 50,
+                ),
+                SizedBox(
+                  height: 70,
+                  width: 70,
+                  child: CircularProgressIndicator(),
+                ),
+              ],
+            ),
           ),
           gotUsers: (gotUsersSate) {
             return const Text(

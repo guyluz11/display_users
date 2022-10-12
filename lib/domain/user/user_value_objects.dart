@@ -70,7 +70,7 @@ class UserId extends UserValueObjectAbstract<String?> {
 }
 
 class UserPassword extends UserValueObjectAbstract<String?> {
-  factory UserPassword(String? input) {
+  factory UserPassword(String input) {
     assert(input != null);
     return UserPassword._(
       validateUserPasswordNotEmpty(input),
@@ -124,7 +124,7 @@ class UserUsername extends UserValueObjectAbstract<String?> {
 }
 
 class UserEmail extends UserValueObjectAbstract<String?> {
-  factory UserEmail(String? input) {
+  factory UserEmail(String input) {
     assert(input != null);
     return UserEmail._(
       validateUserEmailNotEmpty(input),

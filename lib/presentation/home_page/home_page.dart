@@ -18,7 +18,8 @@ class HomePage extends StatelessWidget {
       ),
       backgroundColor: const Color.fromRGBO(251, 245, 249, 1.0),
       body: BlocProvider(
-        create: (context) => getIt<UserBloc>(),
+        create: (context) =>
+            getIt<UserBloc>()..add(const UserEvent.getAllUsers()),
         child: UsersListWidget(),
       ),
     );

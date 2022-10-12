@@ -4,7 +4,7 @@ import 'package:display_users/domain/user/user_failures.dart';
 import 'package:kt_dart/collection.dart';
 
 abstract class IUserRepository {
-  Stream<Either<UserFailures, KtList<UserEntity>>> getAllUsers();
+  Future<Either<UserFailures, KtList<UserEntity>>> getAllUsers();
   //
   // Future<Either<UserFailures, Unit>> add(UserEntity deviceEntity);
   //
