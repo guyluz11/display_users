@@ -40,7 +40,12 @@ class AuthFacadeRepository implements IUserRepository {
         userEntityList
             .add(UserRandomDataApiDtos.fromJsonDynamic(jsonDecoded).toDomain());
       }
-      // userEntityList.sort((a, b) => a.dateOfBirth <b.dateOfBirth,);
+
+      userEntityList.sort(
+        (a, b) => b.dateOfBirth!
+            .getOrCrash()!
+            .compareTo(a.dateOfBirth!.getOrCrash()!),
+      );
 
       final KtList<UserEntity> b = userEntityList.toImmutableList();
 
@@ -54,7 +59,8 @@ class AuthFacadeRepository implements IUserRepository {
   Future<Either<UserFailures, KtList<UserEntity>>> getFavoriteUsers() async {
     Isar? isar;
     try {
-      KtList<UserEntity> userEntityList = <UserEntity>[].toImmutableList();
+      List<UserEntity> tempUserEntityList = <UserEntity>[];
+
       isar = await Isar.open([IsarUserCollectionSchema]);
 
       final IsarCollection<IsarUserCollection> usersCollections =
@@ -69,8 +75,8 @@ class AuthFacadeRepository implements IUserRepository {
         if (favoriteUsers.isLeft()) {
           return favoriteUsers;
         }
-        favoriteUsers.fold((l) => null, (r) => userEntityList = r);
-        for (final UserEntity userEntity in userEntityList.iter) {
+        favoriteUsers.fold((l) => null, (r) => tempUserEntityList = r.asList());
+        for (final UserEntity userEntity in tempUserEntityList) {
           final IsarUserCollection isarUserCollection =
               UserIsarDbDtos.fromDomain(userEntity).toIsarUserCollection();
           await isar.writeTxn(() async {
@@ -78,7 +84,6 @@ class AuthFacadeRepository implements IUserRepository {
           });
         }
       } else {
-        final List<UserEntity> tempUserEntityList = <UserEntity>[];
         final allContacts = await usersCollections.where().findAll();
 
         for (final IsarUserCollection isarUserCollection in allContacts) {
@@ -87,10 +92,18 @@ class AuthFacadeRepository implements IUserRepository {
                   .toDomain();
           tempUserEntityList.add(tempUserEntity);
         }
-        userEntityList = tempUserEntityList.toImmutableList();
       }
 
       await isar.close();
+
+      tempUserEntityList.sort(
+        (a, b) => b.dateOfBirth!
+            .getOrCrash()!
+            .compareTo(a.dateOfBirth!.getOrCrash()!),
+      );
+
+      final KtList<UserEntity> userEntityList =
+          tempUserEntityList.toImmutableList();
 
       return right(userEntityList);
     } catch (e) {
