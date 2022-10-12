@@ -15,55 +15,32 @@ abstract class UserDtos implements _$UserDtos {
   factory UserDtos({
     // @JsonKey(ignore: true)
     int? id,
-    @JsonKey(defaultValue: 'uid')
-        String? uniqueId,
+    @JsonKey(name: 'uid') String? uniqueId,
     String? password,
-    @JsonKey(defaultValue: 'first_name')
-        String? firstName,
-    @JsonKey(defaultValue: 'last_name')
-        String? lastName,
+    @JsonKey(name: 'first_name') String? firstName,
+    @JsonKey(name: 'last_name') String? lastName,
     String? username,
     String? email,
     String? avatar,
     String? gender,
-    @JsonKey(
-      defaultValue: 'phone_number',
-    )
-        String? phoneNumber,
-    @JsonKey(defaultValue: 'social_insurance_number')
-        String? socialInsuranceNumber,
-    @JsonKey(defaultValue: 'date_of_birth')
-        String? dateOfBirth,
-    @JsonKey(defaultValue: 'title')
-        String? employmentTitle,
-    @JsonKey(defaultValue: 'key_skill')
-        String? employmentKeySkill,
-    @JsonKey(defaultValue: 'city')
-        String? city,
-    @JsonKey(defaultValue: 'street_name')
-        String? streetName,
-    @JsonKey(defaultValue: 'street_address')
-        String? streetAddress,
-    @JsonKey(defaultValue: 'zip_code')
-        String? streetZipCode,
-    @JsonKey(defaultValue: 'state')
-        String? state,
-    @JsonKey(defaultValue: 'country')
-        String? country,
-    @JsonKey(defaultValue: 'lat')
-        String? cordinatesLat,
-    @JsonKey(defaultValue: 'lng')
-        String? cordinatesLng,
-    @JsonKey(defaultValue: 'cc_number')
-        String? ccNumber,
-    @JsonKey(defaultValue: 'plan')
-        String? plan,
-    @JsonKey(defaultValue: 'status')
-        String? status,
-    @JsonKey(defaultValue: 'paymentMethod')
-        String? paymentMethod,
-    @JsonKey(defaultValue: 'term')
-        String? term,
+    @JsonKey(name: 'phone_number') String? phoneNumber,
+    @JsonKey(name: 'social_insurance_number') String? socialInsuranceNumber,
+    @JsonKey(name: 'date_of_birth') String? dateOfBirth,
+    @JsonKey(name: 'title') String? employmentTitle,
+    @JsonKey(name: 'key_skill') String? employmentKeySkill,
+    @JsonKey(name: 'city') String? city,
+    @JsonKey(name: 'street_name') String? streetName,
+    @JsonKey(name: 'street_address') String? streetAddress,
+    @JsonKey(name: 'zip_code') String? streetZipCode,
+    @JsonKey(name: 'state') String? state,
+    @JsonKey(name: 'country') String? country,
+    @JsonKey(name: 'lat') String? cordinatesLat,
+    @JsonKey(name: 'lng') String? cordinatesLng,
+    @JsonKey(name: 'cc_number') String? ccNumber,
+    @JsonKey(name: 'plan') String? plan,
+    @JsonKey(name: 'status') String? status,
+    @JsonKey(name: 'paymentMethod') String? paymentMethod,
+    @JsonKey(name: 'term') String? term,
     // required ServerTimestampConverter() FieldValue serverTimeStamp,
   }) = _UserDtos;
 
@@ -109,7 +86,29 @@ abstract class UserDtos implements _$UserDtos {
         userJsonString as Map<String, dynamic>;
     // json.decode(userJsonString) as Map<String, dynamic>;
 
-    return UserDtos.fromJson(userJson);
+    UserDtos userDtos = UserDtos.fromJson(userJson);
+
+    // Fix json decode for elements that are inside elements
+    userDtos = userDtos.copyWith(
+      employmentTitle: userJson['employment']['title'] as String,
+      employmentKeySkill: userJson['employment']['key_skill'] as String,
+      city: userJson['address']['city'] as String,
+      streetName: userJson['address']['street_name'] as String,
+      streetAddress: userJson['address']['street_address'] as String,
+      streetZipCode: userJson['address']['zip_code'] as String,
+      state: userJson['address']['state'] as String,
+      country: userJson['address']['country'] as String,
+      cordinatesLat: userJson['address']['coordinates']['lat'].toString(),
+      cordinatesLng: userJson['address']['coordinates']['lng'].toString(),
+      ccNumber: userJson['credit_card']['cc_number'] as String,
+      plan: userJson['subscription']['plan'] as String,
+      status: userJson['subscription']['status'] as String,
+      paymentMethod: userJson['subscription']['payment_method'] as String,
+      term: userJson['subscription']['term'] as String,
+      dateOfBirth: userJson['date_of_birth'] as String,
+    );
+
+    return userDtos;
   }
 
   final String deviceDtoClassInstance = (UserDtos).toString();
