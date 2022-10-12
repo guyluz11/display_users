@@ -58,6 +58,8 @@ dependencies:
   get_it: ^7.2.0
   # Add hex color codes to your flutter projects
   hexcolor: ^3.0.1
+  # Horizontal data table with a fixed column
+  horizontal_data_table: ^4.1.1+1
   # A composable, multi-platform, Future-based API for HTTP requests.
   http: ^0.13.5
   # Convenient code generator for get_it
@@ -84,7 +86,6 @@ dependencies:
   url_launcher: ^6.1.6
   # Simple, fast generation of RFC4122 UUIDs.
   uuid: ^3.0.6
-
 
 dev_dependencies:
   # Generator for auto_route library.
