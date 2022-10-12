@@ -46,7 +46,7 @@ class AppWidget extends StatelessWidget {
           navigatorObservers: () => [AutoRouteObserver()],
         ),
         routeInformationParser: _rootRouter.defaultRouteParser(),
-        title: 'Flutter Template App',
+        title: 'Display Users',
         // builder: ExtendedNavigator(
         //   router: AppRouter(),
         // ),

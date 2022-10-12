@@ -66,6 +66,10 @@ dependencies:
   injectable: ^1.5.3
   # Allow you to have a screen at launcher for example
   introduction_screen: ^3.0.2
+  # Extremely fast, easy to use, and fully async NoSQL database for Flutter.
+  isar: ^3.0.2
+  # Isar Core binaries for the Isar Database. Needs to be included for Flutter apps.
+  isar_flutter_libs: ^3.0.2
   # Defines the annotations used by json_serializable to create code for JSON serialization and deserialization.
   json_annotation: ^4.7.0
   # Dart Build System builders for handling JSON.
@@ -101,6 +105,8 @@ dev_dependencies:
   freezed: ^2.1.0+1
   # Convenient code generator for get_it.
   injectable_generator: ^1.5.4
+  # Code generator for the Isar Database. Finds classes annotated with @Collection.
+  isar_generator: ^3.0.2
   # Collection of lint rules for Dart and Flutter projects.
   lint: ^1.10.0
   # Mock framework with APIs for Fakes, Mocks, behavior verification, and stubbing.

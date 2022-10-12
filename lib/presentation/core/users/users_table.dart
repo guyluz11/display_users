@@ -1,76 +1,41 @@
-import 'package:display_users/application/user/user_bloc.dart';
 import 'package:display_users/domain/user/user_entity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:horizontal_data_table/horizontal_data_table.dart';
-import 'package:kt_dart/src/collection/kt_list.dart';
+import 'package:kt_dart/kt.dart';
 
-class UsersListWidget extends StatelessWidget {
+class UsersTable extends StatelessWidget {
+  UsersTable(this.usersList);
+
+  final KtList<UserEntity> usersList;
+
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<UserBloc, UserState>(
-      builder: (context, state) {
-        return state.map(
-          loadInProgress: (_) => Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Text(
-                  'Fetching all users',
-                  style: TextStyle(color: Colors.black, fontSize: 30),
-                ),
-                SizedBox(
-                  height: 50,
-                ),
-                SizedBox(
-                  height: 70,
-                  width: 70,
-                  child: CircularProgressIndicator(),
-                ),
-              ],
-            ),
-          ),
-          gotUsers: (gotUsersSate) {
-            final KtList<UserEntity> usersList = gotUsersSate.userList;
-
-            return HorizontalDataTable(
-              leftHandSideColumnWidth: 70,
-              rightHandSideColumnWidth: 1000,
-              isFixedHeader: true,
-              headerWidgets: _getTitleWidget(),
-              leftSideItemBuilder: (BuildContext context, int index) {
-                return _generateFirstColumnRow(
-                  context,
-                  index,
-                  usersList[index],
-                );
-              },
-              rightSideItemBuilder: (BuildContext context, int index) {
-                return _generateRightHandSideColumnRow(
-                  context,
-                  index,
-                  usersList[index],
-                );
-              },
-              itemCount: usersList.size,
-              rowSeparatorWidget: const Divider(
-                color: Colors.black54,
-                height: 1.0,
-                thickness: 0.0,
-              ),
-            );
-          },
-          loadFailure: (LoadFailure value) => const Text(
-            'Got Failure',
-            style: TextStyle(color: Colors.black),
-          ),
-          error: (_) => const Text(
-            'Got Error',
-            style: TextStyle(color: Colors.black),
-          ),
+    return HorizontalDataTable(
+      leftHandSideColumnWidth: 70,
+      rightHandSideColumnWidth: 1000,
+      isFixedHeader: true,
+      headerWidgets: _getTitleWidget(),
+      leftSideItemBuilder: (BuildContext context, int index) {
+        return _generateFirstColumnRow(
+          context,
+          index,
+          usersList[index],
         );
       },
+      rightSideItemBuilder: (BuildContext context, int index) {
+        return _generateRightHandSideColumnRow(
+          context,
+          index,
+          usersList[index],
+        );
+      },
+      itemCount: usersList.size,
+      rowSeparatorWidget: const Divider(
+        color: Colors.black54,
+        height: 1.0,
+        thickness: 0.0,
+      ),
     );
   }
 

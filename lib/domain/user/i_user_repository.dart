@@ -4,7 +4,11 @@ import 'package:display_users/domain/user/user_failures.dart';
 import 'package:kt_dart/collection.dart';
 
 abstract class IUserRepository {
-  Future<Either<UserFailures, KtList<UserEntity>>> getAllUsers();
+  Future<Either<UserFailures, KtList<UserEntity>>> getUsers({
+    int numberOfUsers = 100,
+  });
+
+  Future<Either<UserFailures, KtList<UserEntity>>> getFavoriteUsers();
   //
   // Future<Either<UserFailures, Unit>> add(UserEntity deviceEntity);
   //

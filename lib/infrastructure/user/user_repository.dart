@@ -13,9 +13,12 @@ import 'package:kt_dart/src/collection/kt_list.dart';
 @LazySingleton(as: IUserRepository)
 class AuthFacadeRepository implements IUserRepository {
   @override
-  Future<Either<UserFailures, KtList<UserEntity>>> getAllUsers() async {
+  Future<Either<UserFailures, KtList<UserEntity>>> getUsers({
+    int numberOfUsers = 100,
+  }) async {
     try {
-      final String randomDataApi = await RandomDataApi().getUsrts();
+      final String randomDataApi =
+          await RandomDataApi().getUsrts(numberOfUsersToGet: numberOfUsers);
 
       final List<UserEntity> userEntityList = [];
       final dynamic jsonDecoded = json.decode(randomDataApi);
@@ -38,5 +41,13 @@ class AuthFacadeRepository implements IUserRepository {
     } catch (e) {
       return left(const UserFailures.unexpected());
     }
+  }
+
+  @override
+  Future<Either<UserFailures, KtList<UserEntity>>> getFavoriteUsers() async {
+    final Either<UserFailures, KtList<UserEntity>> favoriteUsers =
+        await getUsers(numberOfUsers: 10);
+
+    return favoriteUsers;
   }
 }

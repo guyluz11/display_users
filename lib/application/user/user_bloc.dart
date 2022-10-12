@@ -13,6 +13,7 @@ part 'user_state.dart';
 class UserBloc extends Bloc<UserEvent, UserState> {
   UserBloc(this._userRepository) : super(const UserState.loadInProgress()) {
     on<GetAllUsers>(_getAllUsers);
+    on<GetFavoriteUsers>(_getFavoriteUsers);
   }
 
   final IUserRepository _userRepository;
@@ -22,7 +23,19 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     Emitter<UserState> emit,
   ) async {
     emit(
-      (await _userRepository.getAllUsers()).fold(
+      (await _userRepository.getUsers()).fold(
+        (_) => const UserState.error(),
+        (users) => UserState.gotUsers(users),
+      ),
+    );
+  }
+
+  Future<void> _getFavoriteUsers(
+    GetFavoriteUsers event,
+    Emitter<UserState> emit,
+  ) async {
+    emit(
+      (await _userRepository.getFavoriteUsers()).fold(
         (_) => const UserState.error(),
         (users) => UserState.gotUsers(users),
       ),
