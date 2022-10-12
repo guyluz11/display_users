@@ -1,9 +1,9 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/material.dart';
-import 'package:display_users/application/auth/auth_bloc.dart';
+import 'package:display_users/application/user/user_bloc.dart';
 import 'package:display_users/injection.dart';
 import 'package:display_users/presentation/routes/app_router.gr.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AppWidget extends StatelessWidget {
@@ -37,7 +37,7 @@ class AppWidget extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) =>
-              getIt<AuthBloc>()..add(const AuthEvent.authCheckRequested()),
+              getIt<UserBloc>()..add(const UserEvent.getAllUsers()),
         ),
       ],
       child: MaterialApp.router(
