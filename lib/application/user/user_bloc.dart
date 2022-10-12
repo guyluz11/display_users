@@ -14,6 +14,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   UserBloc(this._userRepository) : super(const UserState.loadInProgress()) {
     on<GetAllUsers>(_getAllUsers);
     on<GetFavoriteUsers>(_getFavoriteUsers);
+    on<DeleteFavoriteUser>(_deleteFavoriteUser);
   }
 
   final IUserRepository _userRepository;
@@ -39,6 +40,22 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         (_) => const UserState.error(),
         (users) => UserState.gotUsers(users),
       ),
+    );
+  }
+
+  Future<void> _deleteFavoriteUser(
+    DeleteFavoriteUser event,
+    Emitter<UserState> emit,
+  ) async {
+    (await _userRepository
+            .deleteFavoriteUser(int.parse(event.userEntity.id!.getOrCrash()!)))
+        .fold(
+      (_) {
+        emit(const UserState.error());
+      },
+      (users) {
+        add(const UserEvent.getFavoriteUsers());
+      },
     );
   }
 }

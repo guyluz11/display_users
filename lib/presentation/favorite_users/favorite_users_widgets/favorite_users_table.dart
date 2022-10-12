@@ -1,19 +1,22 @@
+import 'package:display_users/application/user/user_bloc.dart';
 import 'package:display_users/domain/user/user_entity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:horizontal_data_table/horizontal_data_table.dart';
 import 'package:kt_dart/kt.dart';
 
-class UsersTable extends StatelessWidget {
-  UsersTable(this.usersList);
+class FavoriteUsersTable extends StatelessWidget {
+  FavoriteUsersTable(this.usersList);
 
   final KtList<UserEntity> usersList;
 
   @override
   Widget build(BuildContext context) {
     return HorizontalDataTable(
-      leftHandSideColumnWidth: 70,
-      rightHandSideColumnWidth: 1000,
+      leftHandSideColumnWidth: 100,
+      rightHandSideColumnWidth: 930,
       isFixedHeader: true,
       headerWidgets: _getTitleWidget(),
       leftSideItemBuilder: (BuildContext context, int index) {
@@ -41,7 +44,7 @@ class UsersTable extends StatelessWidget {
 
   List<Widget> _getTitleWidget() {
     return [
-      _getTitleItemWidget('Id', 70),
+      _getTitleItemWidget('Id', 50),
       _getTitleItemWidget('Avatar', 80),
       _getTitleItemWidget('User Name', 200),
       _getTitleItemWidget('Title', 200),
@@ -53,7 +56,7 @@ class UsersTable extends StatelessWidget {
   Widget _getTitleItemWidget(String label, double width) {
     return Container(
       width: width,
-      height: 56,
+      height: 52,
       margin: const EdgeInsets.fromLTRB(5, 0, 5, 0),
       alignment: Alignment.center,
       child: Text(
@@ -72,14 +75,35 @@ class UsersTable extends StatelessWidget {
     int index,
     UserEntity userEntity,
   ) {
-    return Container(
-      width: 100,
+    return SizedBox(
       height: 52,
-      margin: const EdgeInsets.fromLTRB(5, 0, 5, 0),
-      alignment: Alignment.center,
-      child: Text(
-        userEntity.id!.getOrCrash()!,
-        style: const TextStyle(color: Colors.black),
+      child: Row(
+        children: [
+          TextButton(
+            child: Container(
+              height: 52,
+              alignment: Alignment.center,
+              child: const FaIcon(
+                FontAwesomeIcons.squareMinus,
+                size: 30,
+                color: Colors.red,
+              ),
+            ),
+            onPressed: () {
+              context
+                  .read<UserBloc>()
+                  .add(UserEvent.deleteFavoriteUser(userEntity));
+            },
+          ),
+          Container(
+            height: 52,
+            alignment: Alignment.center,
+            child: Text(
+              userEntity.id!.getOrCrash()!,
+              style: const TextStyle(color: Colors.black),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -93,7 +117,7 @@ class UsersTable extends StatelessWidget {
       children: <Widget>[
         Container(
           width: 80,
-          height: 40,
+          height: 52,
           alignment: Alignment.center,
           child: Image.network(userEntity.avatar!.getOrCrash()!),
         ),

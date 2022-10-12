@@ -1,6 +1,6 @@
 import 'package:display_users/application/user/user_bloc.dart';
 import 'package:display_users/domain/user/user_entity.dart';
-import 'package:display_users/presentation/core/users/users_table.dart';
+import 'package:display_users/presentation/favorite_users/favorite_users_widgets/favorite_users_table.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -34,7 +34,9 @@ class FavoriteUsersListWidget extends StatelessWidget {
           gotUsers: (gotUsersSate) {
             final KtList<UserEntity> usersList = gotUsersSate.userList;
 
-            return UsersTable(usersList);
+            return FavoriteUsersTable(
+              usersList,
+            );
           },
           loadFailure: (LoadFailure value) => const Text(
             'Got Failure',

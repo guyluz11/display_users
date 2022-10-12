@@ -7,12 +7,12 @@ import 'package:display_users/domain/user/user_entity.dart';
 import 'package:display_users/domain/user/user_value_objects.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'user_dtos.freezed.dart';
-part 'user_dtos.g.dart';
+part 'user_random_data_api_dtos.freezed.dart';
+part 'user_random_data_api_dtos.g.dart';
 
 @freezed
-abstract class UserDtos implements _$UserDtos {
-  factory UserDtos({
+abstract class UserRandomDataApiDtos implements _$UserRandomDataApiDtos {
+  factory UserRandomDataApiDtos({
     // @JsonKey(ignore: true)
     int? id,
     @JsonKey(name: 'uid') String? uniqueId,
@@ -44,11 +44,11 @@ abstract class UserDtos implements _$UserDtos {
     // required ServerTimestampConverter() FieldValue serverTimeStamp,
   }) = _UserDtos;
 
-  UserDtos._();
+  UserRandomDataApiDtos._();
 
-  factory UserDtos.fromDomain(UserEntity userDE) {
+  factory UserRandomDataApiDtos.fromDomain(UserEntity userDE) {
     final String? userIdTemp = userDE.id?.getOrCrash();
-    return UserDtos(
+    return UserRandomDataApiDtos(
       id: int.tryParse(userIdTemp ?? ''),
       uniqueId: userDE.uniqueId?.getOrCrash(),
       password: userDE.password?.getOrCrash(),
@@ -78,15 +78,15 @@ abstract class UserDtos implements _$UserDtos {
     );
   }
 
-  factory UserDtos.fromJson(Map<String, dynamic> json) =>
-      _$UserDtosFromJson(json);
+  factory UserRandomDataApiDtos.fromJson(Map<String, dynamic> json) =>
+      _$UserRandomDataApiDtosFromJson(json);
 
-  factory UserDtos.fromJsonDynamic(dynamic userJsonString) {
+  factory UserRandomDataApiDtos.fromJsonDynamic(dynamic userJsonString) {
     final Map<String, dynamic> userJson =
         userJsonString as Map<String, dynamic>;
     // json.decode(userJsonString) as Map<String, dynamic>;
 
-    UserDtos userDtos = UserDtos.fromJson(userJson);
+    UserRandomDataApiDtos userDtos = UserRandomDataApiDtos.fromJson(userJson);
 
     // Fix json decode for elements that are inside elements
     userDtos = userDtos.copyWith(
@@ -111,7 +111,7 @@ abstract class UserDtos implements _$UserDtos {
     return userDtos;
   }
 
-  final String deviceDtoClassInstance = (UserDtos).toString();
+  final String deviceDtoClassInstance = (UserRandomDataApiDtos).toString();
 
   UserEntity toDomain() {
     return UserEntity(

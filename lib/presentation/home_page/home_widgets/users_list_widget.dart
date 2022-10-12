@@ -1,6 +1,6 @@
 import 'package:display_users/application/user/user_bloc.dart';
 import 'package:display_users/domain/user/user_entity.dart';
-import 'package:display_users/presentation/core/users/users_table.dart';
+import 'package:display_users/presentation/home_page/home_widgets/users_table.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
